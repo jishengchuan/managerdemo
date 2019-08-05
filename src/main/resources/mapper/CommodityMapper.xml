@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace：命名空间，设置为数据层接口的全类名-->
+<mapper namespace="com.hwua.managerdemo.mapper.CommodityMapper">
+    <select id="query" resultType="map">
+        SELECT * FROM commodity WHERE 1 = 1
+        <if test="sid != null">
+            AND sort_id = #{sid}
+        </if>
+        <if test="bid != null">
+            AND brand_id = #{bid}
+        </if>
+        <if test="name != null">
+            AND commodity_name LIKE CONCAT('%',#{name},'%')
+        </if>
+        <if test="desc == 1">
+            ORDER BY COMMODITY_PRICE DESC
+        </if>
+        <if test="desc == 0">
+            ORDER BY COMMODITY_PRICE
+        </if>
+    </select>
+</mapper>
+

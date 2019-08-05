@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hwua.managerdemo.mapper.UserMapper">
+
+    <select id="query4One" resultType="map">
+        SELECT * FROM sys_user,sys_role,sys_user_role
+        WHERE sys_user.user_id = sys_user_role.user_id
+          AND sys_role.role_id = sys_user_role.role_id
+        <if test="userId != null">
+            AND sys_user.user_id = #{userId}
+        </if>
+        <if test="username != null">
+            AND sys_user.username = #{username}
+        </if>
+        <if test="password != null">
+            AND sys_user.password = #{password}
+        </if>
+    </select>
+
+    <select id="query4User" parameterType="map" resultType="map">
+        SELECT * FROM sys_user,sys_role,sys_user_role
+        WHERE sys_user.user_id = sys_user_role.user_id
+          AND sys_role.role_id = sys_user_role.role_id
+    </select>
+
+    <select id="queryPermission" parameterType="int" resultType="map">
+        SELECT * FROM sys_role,sys_permission,sys_role_permission
+        WHERE sys_role.role_id = sys_role_permission.role_id
+          AND sys_permission.permission_id = sys_role_permission.permission_id
+          AND sys_role.role_id = #{roleId}
+    </select>
+</mapper>
+
