@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title th:text="角色管理">AdminLTE 2 | Data Tables</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.7 -->
+    <link rel="stylesheet" th:href="@{bower_components/bootstrap/dist/css/bootstrap.min.css}"
+          href="../../bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" th:href="@{bower_components/font-awesome/css/font-awesome.min.css}"
+          href="../../bower_components/font-awesome/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" th:href="@{bower_components/Ionicons/css/ionicons.min.css}"
+          href="../../bower_components/Ionicons/css/ionicons.min.css">
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" th:href="@{plugins/iCheck/all.css}" href="../../plugins/iCheck/all.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" th:href="@{bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css}"
+          href="../../bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" th:href="@{dist/css/AdminLTE.min.css}" href="../../dist/css/AdminLTE.min.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" th:href="@{dist/css/skins/_all-skins.min.css}"
+          href="../../dist/css/skins/_all-skins.min.css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Google Font -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+</head>
+<body class="hold-transition skin-black sidebar-mini">
+<div class="wrapper">
+
+    <header th:replace="_nav :: header"></header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside th:replace="_aside :: aside"></aside>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1 th:text="角色管理">
+                Data Tables
+                <small>advanced tables</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i><i th:text="首页">Home</i></a></li>
+                <li><a href="#" th:text="角色管理">Tables</a></li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title" th:text="角色表单">Hover Data Table</h3>
+                            <button type="button" id="add" class="btn btn-success pull-right" data-toggle="modal"
+                                    data-target="#modal-add">
+                                添加角色
+                            </button>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <table id="example2" class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th th:text="角色编号">Rendering engine</th>
+                                    <th th:text="角色名称">Browser</th>
+                                    <th th:text="角色描述">Platform(s)</th>
+                                    <th th:text="创建时间">Engine version</th>
+                                    <th th:text="操作">CSS grade</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="role : ${roles}">
+                                    <td th:text="${role.role_id}">Trident</td>
+                                    <td th:text="${role.name}">Internet
+                                        Explorer 4.0
+                                    </td>
+                                    <td th:text="${role.description}">Win 95+</td>
+                                    <td th:text="${role.create_time}"> 4</td>
+                                    <td>
+                                        <button type="button" id="permission" class="btn btn-warning" data-toggle="modal"
+                                                data-target="#modal-permission" onclick="">
+                                            权限
+                                        </button>
+                                        <button type="button" id="update" class="btn btn-info" data-toggle="modal"
+                                                data-target="#modal-update" onclick="queryRole(this)">
+                                            编辑
+                                        </button>
+                                        <button type="button" class="btn btn-danger" onclick="ban(this)"
+                                                th:if="${role.status} == 1">禁用
+                                        </button>
+                                        <button type="button" class="btn btn-success" onclick="ban(this)"
+                                                th:if="${role.status} == 0">启用
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <th th:text="角色编号">Rendering engine</th>
+                                    <th th:text="角色名称">Browser</th>
+                                    <th th:text="角色描述">Platform(s)</th>
+                                    <th th:text="创建时间">Engine version</th>
+                                    <th th:text="操作">CSS grade</th>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </section>
+        <!-- /.content -->
+        <div class="modal fade" id="modal-update">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" th:text="信息修改">Info Modal</h4>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Horizontal Form -->
+                        <div class="box box-info">
+                            <!--<div class="box-header with-border">
+                              &lt;!&ndash;th:text="用户编号-${update.userId}"&ndash;&gt;
+                              <h3 class="box-title"><i>Horizontal Form</i></h3>
+                            </div>-->
+                            <!-- /.box-header -->
+                            <!-- form start -->
+                            <form class="form-horizontal" id="form1">
+                                <div class="box-body">
+                                    <div class="form-group">
+                                        <label for="inputName" class="col-sm-2 control-label" th:text="角色名称">
+                                            Username</label>
+                                        <div class="col-sm-10">
+                                            <input type="hidden" name="roleId" id="rid">
+                                            <input type="text" class="form-control" id="inputName" name="roleName"
+                                                   placeholder="roleName">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputDescription" class="col-sm-2 control-label">角色描述</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="inputDescription" name="description"
+                                                   placeholder="description">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.box-body -->
+                                <div class="box-footer">
+                                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal"
+                                            th:text="关闭">Close
+                                    </button>
+                                    <button type="submit" class="btn btn-info pull-right" id="submitup" th:text="提交">Sign
+                                        in
+                                    </button>
+                                </div>
+                                <!-- /.box-footer -->
+                            </form>
+                        </div>
+                        <!-- /.box -->
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+        <div class="modal fade" id="modal-add">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" th:text="添加用户">Default Modal</h4>
+                    </div>
+                    <div class="modal-body">
+                        <!-- form start -->
+                        <form class="form-horizontal" id="form2">
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <label for="addName" class="col-sm-2 control-label" th:text="角色名">roleName</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="addName" name="roleName"
+                                               placeholder="roleName">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="addDescription" class="col-sm-2 control-label" th:text="描述"> description</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="addDescription" name="description"
+                                               placeholder="description">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-footer">
+                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal" th:text="关闭">
+                                    Close
+                                </button>
+                                <button type="submit" class="btn btn-info pull-right" id="submitadd" th:text="提交">Sign in
+                                </button>
+                            </div>
+                            <!-- /.box-footer -->
+                        </form>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+        <div class="modal fade" id="modal-permission">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" th:text="权限">Default Modal</h4>
+                    </div>
+                    <div class="modal-body">
+                        <!-- form start -->
+                        <form class="form-horizontal" id="form3">
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <label>
+                                        <input type="checkbox" class="minimal" checked>
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label>
+                                        <input type="checkbox" class="minimal">
+                                    </label>
+                                    <!--<label>
+                                        <input type="checkbox" class="minimal" disabled>
+                                        Minimal skin checkbox
+                                    </label>-->
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-footer">
+                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal" th:text="关闭">
+                                    Close
+                                </button>
+                                <button type="submit" class="btn btn-info pull-right" id="updatePer" th:text="提交">Sign in
+                                </button>
+                            </div>
+                            <!-- /.box-footer -->
+                        </form>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+    </div>
+    <!-- /.content-wrapper -->
+    <footer class="main-footer">
+        <div class="pull-right hidden-xs">
+            <b>Version</b> 2.4.13
+        </div>
+        <strong>Copyright &copy; 2014-2019 <a href="https://adminlte.io">AdminLTE</a>.</strong> All rights
+        reserved.
+    </footer>
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery 3 -->
+<script th:src="@{bower_components/jquery/dist/jquery.min.js}"
+        src="../../bower_components/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap 3.3.7 -->
+<script th:src="@{bower_components/bootstrap/dist/js/bootstrap.min.js}"
+        src="../../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- DataTables -->
+<script th:src="@{bower_components/datatables.net/js/jquery.dataTables.min.js}"
+        src="../../bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script th:src="@{bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js}"
+        src="../../bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<!-- SlimScroll -->
+<script th:src="@{bower_components/jquery-slimscroll/jquery.slimscroll.min.js}"
+        src="../../bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+<!-- iCheck 1.0.1 -->
+<script th:src="@{plugins/iCheck/icheck.min.js}" src="../../plugins/iCheck/icheck.min.js"></script>
+<!-- FastClick -->
+<script th:src="@{bower_components/fastclick/lib/fastclick.js}"
+        src="../../bower_\components/fastclick/lib/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script th:src="@{dist/js/adminlte.min.js}" src="../../dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script th:src="@{dist/js/demo.js}" src="../../dist/js/demo.js"></script>
+<!-- page script -->
+<script>
+    $(function () {
+        $('#example1').DataTable();
+        $('#example2').DataTable({
+            'paging': true,
+            'lengthChange': false,
+            'searching': false,
+            'ordering': true,
+            'info': true,
+            'autoWidth': false
+        });
+        //iCheck for checkbox and radio inputs
+        $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+            checkboxClass: 'icheckbox_minimal-blue',
+            radioClass   : 'iradio_minimal-blue'
+        });
+        $('#submitup').click(function () {
+            var data = $('#form1').serialize();
+            $.ajax({
+                url: "/updateRole",
+                type: "post",
+                data: data,
+                success: function (res) {
+                    console.log(res);
+                    if (res.success) {
+                        location = "/roleData";
+                    } else {
+                        alert(res.error)
+                    }
+                }
+            });
+            return false;
+        });
+        $('#submitadd').click(function () {
+            var data = $('#form2').serialize();
+            $.ajax({
+                url:"/addRole",
+                type:"post",
+                data:data,
+                success:function (res) {
+                    console.log(res);
+                    if (res.success) {
+                        location = "/roleData"
+                    } else {
+                        alert(res.error)
+                    }
+                }
+            })
+
+        })
+    });
+
+    function queryRole(e) {
+        var roleId = $(e).parent().parent().children(":first-child").text();
+        $.ajax({
+            url: "/queryRole",
+            type: "post",
+            data: {
+                roleId: roleId
+            },
+            success: function (res) {
+                if (!res.error) {
+                    $('#rid').val(res.role_id);
+                    $('#inputName').val(res.name);
+                    $('#inputDescription').val(res.description);
+                } else {
+                    alert("修改失败")
+                }
+            }
+        })
+    }
+    function ban(e) {
+        var status = $(e).parent().parent().children("#status").text();
+        var roleId = $(e).parent().parent().children(":first-child").text();
+        $.ajax({
+            url: "/banRole",
+            type: "post",
+            data: {
+                roleId: roleId,
+                status: status
+            },
+            success: function (res) {
+                console.log(res);
+                if (res.success) {
+                    alert("成功");
+                    location = "/userData"
+                } else {
+                    alert("失败")
+                }
+            }
+        })
+    }
+</script>
+</body>
+</html>

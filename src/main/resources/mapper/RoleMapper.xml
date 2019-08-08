@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace：命名空间，设置为数据层接口的全类名-->
+<mapper namespace="com.hwua.managerdemo.mapper.RoleMapper">
+
+    <select id="queryRoles" parameterType="map" resultType="map">
+        SELECT *
+        FROM sys_role
+    </select>
+
+    <select id="queryRole" resultType="map">
+        SELECT * FROM sys_role WHERE 1 = 1
+        <if test="roleName != null">
+            AND name = #{roleName}
+        </if>
+        <if test="roleId != null">
+            AND role_id = #{roleId}
+        </if>
+    </select>
+
+    <update id="doUpdate" parameterType="map">
+        UPDATE sys_role SET name = #{roleName},description = #{description} WHERE role_id = #{roleId}
+    </update>
+
+    <update id="ban" parameterType="map">
+        UPDATE sys_role SET status = #{status} WHERE role_id = #{roleId}
+    </update>
+
+    <insert id="insertRole" parameterType="map">
+        INSERT INTO sys_role (name, description) VALUES (#{roleName},#{description})
+    </insert>
+
+    <insert id="insertRoleAndPermission" parameterType="map">
+        INSERT INTO sys_role_permission (role_id, permission_id) VALUES (#{roleId},#{permissionId})
+    </insert>
+    <!--<select id="queryPermissions" resultMap="map">
+        SELECT *
+        FROM sys_role,
+             sys_permission,
+             sys_role_permission
+        WHERE sys_role.role_id = sys_role_permission.role_id
+          AND sys_permission.permission_id = sys_role_permission.permission_id
+          AND sys_role.role_id IN
+        <foreach collection="roleIds" item="roleId" open="(" separator="," close=")">
+            #{roleId}
+        </foreach>
+    </select>-->
+
+</mapper>
+

@@ -26,28 +26,28 @@
         <!--th:each="permission : ${permissions}}"-->
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">MAIN NAVIGATION</li>
-            <li class="active treeview">
-                <a href="#"><i class="fa fa-dashboard"></i> <span th:text="工作台">Dashboard</span></a>
+            <li class="treeview" th:class="${index}==1 ? 'active treeview'">
+                <a href="/index"><i class="fa fa-dashboard"></i> <span th:text="工作台">Dashboard</span></a>
             </li>
             <!--th:if="${permission.permission_id} == 3001"-->
-            <li class="treeview" th:each="permission : ${permissions}" th:if="${permission.permission_id} == 3002">
-                <a href="#">
-                    <i class="fa fa-files-o"></i>
+            <li class="treeview" th:each="permission : ${session.permissions}" th:if="${permission.permission_id} == 3002" th:class="${index}==2 ? 'active treeview'">
+                <a href="/userData">
+                    <i class="fa fa-user"></i>
                     <span th:text="${permission.pname}">Layout Options</span>
                     <span class="pull-right-container">
               <span class="label label-primary pull-right">4</span>
             </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="pages/layout/top-nav.html"><i class="fa fa-circle-o"></i> Top Navigation</a></li>
+                    <li><a href="/userData"><i class="fa fa-circle-o"></i> Top Navigation</a></li>
                     <li><a href="pages/layout/boxed.html"><i class="fa fa-circle-o"></i> Boxed</a></li>
                     <li><a href="pages/layout/fixed.html"><i class="fa fa-circle-o"></i> Fixed</a></li>
                     <li><a href="pages/layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>
                 </ul>
             </li>
-            <li>
-                <a href="pages/widgets.html">
-                    <i class="fa fa-th"></i> <span>Widgets</span>
+            <li th:each="permission : ${session.permissions}" th:if="${permission.permission_id} == 3003" th:class="${index}==3 ? 'active treeview'">
+                <a href="/roleData">
+                    <i class="fa  fa-tripadvisor"></i> <span th:text="角色管理">Widgets</span>
                     <span class="pull-right-container">
               <small class="label pull-right bg-green">new</small>
             </span>
