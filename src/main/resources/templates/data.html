@@ -150,7 +150,8 @@
                                         <i th:each="permission : ${session.permissions}" th:if="${permission.permission_id} == 3007">
                                         <button type="button" class="btn btn-success" onclick="ban(this)"
                                                 th:if="${user.status}==0">启用
-                                        </button></i>
+                                        </button>
+                                        </i>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -417,8 +418,8 @@
     });
 
     function ban(e) {
-        var status = $(e).parent().parent().children("#status").text();
-        var userId = $(e).parent().parent().children(":first-child").text();
+        var status = $(e).parent().parent().parent().children("#status").text();
+        var userId = $(e).parent().parent().parent().children(":first-child").text();
         $.ajax({
             url: "/ban",
             type: "post",

@@ -1,6 +1,5 @@
 package com.hwua.managerdemo.service.impl;
 
-import com.github.pagehelper.PageHelper;
 import com.hwua.managerdemo.mapper.CommodityMapper;
 import com.hwua.managerdemo.service.CommodityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +23,9 @@ public class CommodityServiceImpl implements CommodityService {
         map.put("bid",bid);
         map.put("desc",desc);
         //开始分页
-        if (page!=null){
+        /*if (page!=null){
             PageHelper.startPage(page,5);
-        }
+        }*/
         return commodityMapper.query(map);
     }
 }

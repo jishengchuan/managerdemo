@@ -37,7 +37,7 @@
     <select id="queryRoles" parameterType="int" resultType="map">
         SELECT *
         FROM sys_role
-        WHERE role_id >= #{roleId}
+        WHERE role_id >= #{roleId} AND status = 1
     </select>
 
     <update id="doUpdate" parameterType="map">

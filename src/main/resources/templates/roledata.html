@@ -78,6 +78,7 @@
                                     <th th:text="角色编号">Rendering engine</th>
                                     <th th:text="角色名称">Browser</th>
                                     <th th:text="角色描述">Platform(s)</th>
+                                    <th th:text="状态">Platform(s)</th>
                                     <th th:text="创建时间">Engine version</th>
                                     <th th:text="操作">CSS grade</th>
                                 </tr>
@@ -89,6 +90,7 @@
                                         Explorer 4.0
                                     </td>
                                     <td th:text="${role.description}">Win 95+</td>
+                                    <td id="status" th:text="${role.status}">Win 95+</td>
                                     <td th:text="${role.create_time}"> 4</td>
                                     <td>
                                         <button type="button" id="permission" class="btn btn-warning" th:each="permission : ${session.permissions}" th:if="${permission.permission_id} == 3004"
@@ -116,6 +118,7 @@
                                     <th th:text="角色编号">Rendering engine</th>
                                     <th th:text="角色名称">Browser</th>
                                     <th th:text="角色描述">Platform(s)</th>
+                                    <th th:text="状态">Platform(s)</th>
                                     <th th:text="创建时间">Engine version</th>
                                     <th th:text="操作">CSS grade</th>
                                 </tr>
@@ -442,8 +445,8 @@
     }
 
     function ban(e) {
-        var status = $(e).parent().parent().children("#status").text();
-        var roleId = $(e).parent().parent().children(":first-child").text();
+        var status = $(e).parent().parent().parent().children("#status").text();
+        var roleId = $(e).parent().parent().parent().children(":first-child").text();
         $.ajax({
             url: "/banRole",
             type: "post",
@@ -455,7 +458,7 @@
                 console.log(res);
                 if (res.success) {
                     alert("成功");
-                    location = "/userData"
+                    location = "/roleData"
                 } else {
                     alert("失败")
                 }
