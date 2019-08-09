@@ -31,11 +31,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Map<String, Object>> queryPermission(Integer roleId) {
-        return userMapper.queryPermission(roleId);
-    }
-
-    @Override
     public List<Map<String, Object>> queryRoles(Integer roleId) {
         return userMapper.queryRoles(roleId);
     }

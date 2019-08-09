@@ -9,8 +9,6 @@ public interface UserService {
 
     Map<String,Object> query4One(Integer userId);
 
-    List<Map<String,Object>> queryPermission(Integer roleId);
-
     List<Map<String,Object>> queryRoles(Integer roleId);
 
     Map<String,Object> queryByUsername(String username);

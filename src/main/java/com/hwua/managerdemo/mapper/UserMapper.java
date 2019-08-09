@@ -22,13 +22,6 @@ public interface UserMapper {
     List<Map<String,Object>> query4User(Map<String,Object> param);
 
     /**
-     * 根据角色Id查询权限
-     * @param roleId
-     * @return
-     */
-    List<Map<String,Object>> queryPermission(Integer roleId);
-
-    /**
      * 查询可用角色(比自身id小)
      * @param roleId
      * @return

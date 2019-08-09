@@ -34,16 +34,6 @@
         </if>
     </select>
 
-    <select id="queryPermission" parameterType="int" resultType="map">
-        SELECT *
-        FROM sys_role,
-             sys_permission,
-             sys_role_permission
-        WHERE sys_role.role_id = sys_role_permission.role_id
-          AND sys_permission.permission_id = sys_role_permission.permission_id
-          AND sys_role.role_id = #{roleId}
-    </select>
-
     <select id="queryRoles" parameterType="int" resultType="map">
         SELECT *
         FROM sys_role

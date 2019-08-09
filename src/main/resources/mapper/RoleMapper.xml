@@ -35,18 +35,10 @@
     <insert id="insertRoleAndPermission" parameterType="map">
         INSERT INTO sys_role_permission (role_id, permission_id) VALUES (#{roleId},#{permissionId})
     </insert>
-    <!--<select id="queryPermissions" resultMap="map">
-        SELECT *
-        FROM sys_role,
-             sys_permission,
-             sys_role_permission
-        WHERE sys_role.role_id = sys_role_permission.role_id
-          AND sys_permission.permission_id = sys_role_permission.permission_id
-          AND sys_role.role_id IN
-        <foreach collection="roleIds" item="roleId" open="(" separator="," close=")">
-            #{roleId}
-        </foreach>
-    </select>-->
+
+    <delete id="deleteRoleAndPermission" parameterType="int">
+        DELETE FROM sys_role_permission WHERE role_id = #{roleId}
+    </delete>
 
 </mapper>
 

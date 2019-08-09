@@ -66,7 +66,7 @@
                         <div class="box-header">
                             <h3 class="box-title" th:text="角色表单">Hover Data Table</h3>
                             <button type="button" id="add" class="btn btn-success pull-right" data-toggle="modal"
-                                    data-target="#modal-add">
+                                    data-target="#modal-add" th:each="permission : ${session.permissions}" th:if="${permission.permission_id} == 3008">
                                 添加角色
                             </button>
                         </div>
@@ -91,20 +91,23 @@
                                     <td th:text="${role.description}">Win 95+</td>
                                     <td th:text="${role.create_time}"> 4</td>
                                     <td>
-                                        <button type="button" id="permission" class="btn btn-warning" data-toggle="modal"
-                                                data-target="#modal-permission" onclick="">
+                                        <button type="button" id="permission" class="btn btn-warning" th:each="permission : ${session.permissions}" th:if="${permission.permission_id} == 3004"
+                                                data-toggle="modal"
+                                                data-target="#modal-permission" onclick="queryRolePermission(this)">
                                             权限
                                         </button>
-                                        <button type="button" id="update" class="btn btn-info" data-toggle="modal"
+                                        <button type="button" id="update" class="btn btn-info" th:each="permission : ${session.permissions}" th:if="${permission.permission_id} == 3009" data-toggle="modal"
                                                 data-target="#modal-update" onclick="queryRole(this)">
                                             编辑
                                         </button>
+                                        <i th:each="permission : ${session.permissions}" th:if="${permission.permission_id} == 3010">
                                         <button type="button" class="btn btn-danger" onclick="ban(this)"
                                                 th:if="${role.status} == 1">禁用
-                                        </button>
+                                        </button></i>
+                                        <i th:each="permission : ${session.permissions}" th:if="${permission.permission_id} == 3010">
                                         <button type="button" class="btn btn-success" onclick="ban(this)"
                                                 th:if="${role.status} == 0">启用
-                                        </button>
+                                        </button></i>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -159,7 +162,8 @@
                                     <div class="form-group">
                                         <label for="inputDescription" class="col-sm-2 control-label">角色描述</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="inputDescription" name="description"
+                                            <input type="text" class="form-control" id="inputDescription"
+                                                   name="description"
                                                    placeholder="description">
                                         </div>
                                     </div>
@@ -169,7 +173,8 @@
                                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal"
                                             th:text="关闭">Close
                                     </button>
-                                    <button type="submit" class="btn btn-info pull-right" id="submitup" th:text="提交">Sign
+                                    <button type="submit" class="btn btn-info pull-right" id="submitup" th:text="提交">
+                                        Sign
                                         in
                                     </button>
                                 </div>
@@ -204,7 +209,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="addDescription" class="col-sm-2 control-label" th:text="描述"> description</label>
+                                    <label for="addDescription" class="col-sm-2 control-label" th:text="描述">
+                                        description</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="addDescription" name="description"
                                                placeholder="description">
@@ -213,10 +219,12 @@
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">
-                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal" th:text="关闭">
+                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal"
+                                        th:text="关闭">
                                     Close
                                 </button>
-                                <button type="submit" class="btn btn-info pull-right" id="submitadd" th:text="提交">Sign in
+                                <button type="submit" class="btn btn-info pull-right" id="submitadd" th:text="提交">Sign
+                                    in
                                 </button>
                             </div>
                             <!-- /.box-footer -->
@@ -234,33 +242,44 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" th:text="权限">Default Modal</h4>
+                        <h4 class="modal-title" th:text="权限管理">Default Modal</h4>
+                        <small>选择权限,点击提交,修改权限!</small>
                     </div>
                     <div class="modal-body">
                         <!-- form start -->
                         <form class="form-horizontal" id="form3">
                             <div class="box-body">
-                                <div class="form-group">
-                                    <label>
-                                        <input type="checkbox" class="minimal" checked>
-                                    </label>
-                                </div>
-                                <div class="form-group">
-                                    <label>
-                                        <input type="checkbox" class="minimal">
-                                    </label>
-                                    <!--<label>
-                                        <input type="checkbox" class="minimal" disabled>
-                                        Minimal skin checkbox
-                                    </label>-->
-                                </div>
+                                <ul data-widget="tree">
+                                    <input type="hidden" id="perRole">
+                                    <li class="treeview">
+                                        <input type="checkbox" name="per" id="userMgr" value="3002"><a href="#">&nbsp&nbsp&nbsp&nbsp用户管理</a>
+                                        <ul class="treeview-menu">
+                                            <li><label><input type="checkbox" name="per" id="userAdd" value="3005">&nbsp&nbsp&nbsp&nbsp用户添加</label></li>
+                                            <li><label><input type="checkbox" name="per" id="userEdit" value="3006">&nbsp&nbsp&nbsp&nbsp用户修改</label></li>
+                                            <li><label><input type="checkbox" name="per" id="userDel" value="3007">&nbsp&nbsp&nbsp&nbsp用户删除</label></li>
+                                        </ul>
+                                    </li>
+                                    <li class="treeview">
+                                        <input type="checkbox" name="per" id="roleMgr" value="3003"><a href="#">&nbsp&nbsp&nbsp&nbsp角色管理</a>
+                                        <ul class="treeview-menu">
+                                            <li><label><input type="checkbox" name="per" id="roleAdd" value="3008">&nbsp&nbsp&nbsp&nbsp角色添加</label></li>
+                                            <li><label><input type="checkbox" name="per" id="roleEdit" value="3009">&nbsp&nbsp&nbsp&nbsp角色修改</label></li>
+                                            <li><label><input type="checkbox" name="per" id="roleDel" value="3010">&nbsp&nbsp&nbsp&nbsp角色删除</label></li>
+                                        </ul>
+                                    </li>
+                                    <li class="treeview">
+                                        <input type="checkbox" id="permissionMgr" name="per" value="3004"><a href="#">&nbsp&nbsp&nbsp&nbsp权限管理</a>
+                                    </li>
+                                </ul>
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">
-                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal" th:text="关闭">
+                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal"
+                                        th:text="关闭">
                                     Close
                                 </button>
-                                <button type="submit" class="btn btn-info pull-right" id="updatePer" th:text="提交">Sign in
+                                <button type="submit" class="btn btn-info pull-right" id="updatePer" th:text="提交">Sign
+                                    in
                                 </button>
                             </div>
                             <!-- /.box-footer -->
@@ -322,7 +341,7 @@
         //iCheck for checkbox and radio inputs
         $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
             checkboxClass: 'icheckbox_minimal-blue',
-            radioClass   : 'iradio_minimal-blue'
+            radioClass: 'iradio_minimal-blue'
         });
         $('#submitup').click(function () {
             var data = $('#form1').serialize();
@@ -344,10 +363,10 @@
         $('#submitadd').click(function () {
             var data = $('#form2').serialize();
             $.ajax({
-                url:"/addRole",
-                type:"post",
-                data:data,
-                success:function (res) {
+                url: "/addRole",
+                type: "post",
+                data: data,
+                success: function (res) {
                     console.log(res);
                     if (res.success) {
                         location = "/roleData"
@@ -357,6 +376,25 @@
                 }
             })
 
+        });
+        $('#updatePer').click(function () {
+            var roleId = $('#perRole').val();
+            /*var perId =[];*/
+            var form3 = $('#form3').serialize();
+            /*$(':checkbox[name="per"]:checked').each(function(){
+                url += perId.push($(this).val());
+            });*/
+            var url = "/addRoleAndPermission?roleId="+roleId+"&"+form3;
+            $.ajax({
+                url:url,
+                type:"post",
+                success:function (res) {
+                    if (res.success){
+                        alert("修改权限成功")
+                    }
+                }
+            });
+            return false;
         })
     });
 
@@ -379,6 +417,30 @@
             }
         })
     }
+
+    function queryRolePermission(e) {
+        var roleId = $(e).parent().parent().children(":first-child").text();
+        $.ajax({
+            url: "/queryRolePermission",
+            type: "post",
+            data: {
+                roleId: roleId
+            },
+            success: function (res) {
+                $('#perRole').val(res.roleId);
+                $('#userMgr').prop("checked",!!res.userMgr);
+                $('#userAdd').prop("checked",!!res.userAdd);
+                $('#userEdit').prop("checked",!!res.userEdit);
+                $('#userDel').prop("checked",!!res.userDel);
+                $('#roleMgr').prop("checked",!!res.roleMgr);
+                $('#roleAdd').prop("checked",!!res.roleAdd);
+                $('#roleEdit').prop("checked",!!res.roleEdit);
+                $('#roleDel').prop("checked",!!res.roleDel);
+                $('#permissionMgr').prop("checked",!!res.permissionMgr);
+            }
+        })
+    }
+
     function ban(e) {
         var status = $(e).parent().parent().children("#status").text();
         var roleId = $(e).parent().parent().children(":first-child").text();

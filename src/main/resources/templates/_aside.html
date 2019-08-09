@@ -23,7 +23,6 @@
         </form>
         <!-- /.search form -->
         <!-- sidebar menu: : style can be found in sidebar.less -->
-        <!--th:each="permission : ${permissions}}"-->
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">MAIN NAVIGATION</li>
             <li class="treeview" th:class="${index}==1 ? 'active treeview'">
@@ -33,23 +32,13 @@
             <li class="treeview" th:each="permission : ${session.permissions}" th:if="${permission.permission_id} == 3002" th:class="${index}==2 ? 'active treeview'">
                 <a href="/userData">
                     <i class="fa fa-user"></i>
-                    <span th:text="${permission.pname}">Layout Options</span>
-                    <span class="pull-right-container">
-              <span class="label label-primary pull-right">4</span>
-            </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="/userData"><i class="fa fa-circle-o"></i> Top Navigation</a></li>
-                    <li><a href="pages/layout/boxed.html"><i class="fa fa-circle-o"></i> Boxed</a></li>
-                    <li><a href="pages/layout/fixed.html"><i class="fa fa-circle-o"></i> Fixed</a></li>
-                    <li><a href="pages/layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>
-                </ul>
+                    <span th:text="${permission.pname}">Layout Options</span></a>
             </li>
             <li th:each="permission : ${session.permissions}" th:if="${permission.permission_id} == 3003" th:class="${index}==3 ? 'active treeview'">
                 <a href="/roleData">
                     <i class="fa  fa-tripadvisor"></i> <span th:text="角色管理">Widgets</span>
                     <span class="pull-right-container">
-              <small class="label pull-right bg-green">new</small>
+              <small class="label pull-right bg-green">vital</small>
             </span>
                 </a>
             </li>

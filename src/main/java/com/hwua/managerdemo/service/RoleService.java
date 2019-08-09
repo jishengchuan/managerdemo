@@ -11,6 +11,10 @@ public interface RoleService {
 
     boolean addRole(Map<String,Object> role);
 
+    boolean addRoleAndPermission(Map<String,Object> param);
+
+    boolean deleteRoleAndPermission(Integer roleId);
+
     boolean doUpdate(Map<String,Object> param);
 
     boolean ban(Map<String,Object> param);

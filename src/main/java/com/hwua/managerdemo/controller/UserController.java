@@ -1,6 +1,7 @@
 package com.hwua.managerdemo.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.hwua.managerdemo.service.PermissionService;
 import com.hwua.managerdemo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,11 +21,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
-    @GetMapping("/logindemo")
-    public String logindemo() {
-        return "logindemo";
-    }
+    @Autowired
+    private PermissionService permissionService;
 
     @GetMapping("/login")
     public String login() {
@@ -42,7 +40,7 @@ public class UserController {
         if (login.containsKey("error")) {
             return JSON.toJSONString(login);
         }
-        List<Map<String, Object>> permission = userService.queryPermission(Integer.parseInt(login.get("role_id").toString()));
+        List<Map<String, Object>> permission = permissionService.queryPermission(Integer.parseInt(login.get("role_id").toString()));
         session.setAttribute("permissions", permission);
         session.setAttribute("user", login);
         map = new HashMap<>();

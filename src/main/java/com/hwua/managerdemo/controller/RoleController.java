@@ -1,6 +1,7 @@
 package com.hwua.managerdemo.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.hwua.managerdemo.service.PermissionService;
 import com.hwua.managerdemo.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,8 @@ public class RoleController {
 
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private PermissionService permissionService;
 
     @GetMapping("/roleData")
     public String roleData(Model model) {
@@ -38,6 +41,37 @@ public class RoleController {
             return JSON.toJSONString(role);
         }
         return "{\"error\":false}";
+    }
+
+    @PostMapping(value = "/queryRolePermission", produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public String queryRolePermission(Integer roleId) {
+        Map<String,Object> param = new HashMap<>();
+        List<Map<String, Object>> allPermissions = permissionService.queryAllPermission();
+        List<Map<String, Object>> permissions = permissionService.queryPermission(roleId);
+        for (Map<String, Object> allPermission : allPermissions) {
+            for (Map<String, Object> permission : permissions) {
+                if (allPermission.get("permission_id").toString().equals(permission.get("permission_id").toString())) {
+                    param.put(permission.get("type").toString(), true);
+                }
+            }
+        }
+        param.put("roleId",roleId);
+        return JSON.toJSONString(param);
+    }
+
+    @PostMapping(value = "/addRoleAndPermission", produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public String addRoleAndPermission(Integer roleId, Integer[] per){
+        roleService.deleteRoleAndPermission(roleId);
+        Map<String,Object> param = new HashMap<>();
+        for (int i = 0; i < per.length; i++){
+            param.put("roleId",roleId);
+            param.put("permissionId",per[i]);
+            roleService.addRoleAndPermission(param);
+            param.clear();
+        }
+        return "{\"success\":true}";
     }
 
     @PostMapping(value = "/updateRole", produces = "application/json;charset=utf-8")

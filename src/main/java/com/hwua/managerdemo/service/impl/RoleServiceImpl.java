@@ -31,6 +31,16 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
+    public boolean addRoleAndPermission(Map<String, Object> param) {
+        return roleMapper.insertRoleAndPermission(param) == 1;
+    }
+
+    @Override
+    public boolean deleteRoleAndPermission(Integer roleId) {
+        return roleMapper.deleteRoleAndPermission(roleId) == 1;
+    }
+
+    @Override
     public boolean doUpdate(Map<String, Object> param) {
         return roleMapper.doUpdate(param) == 1;
     }

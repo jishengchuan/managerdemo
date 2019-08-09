@@ -49,4 +49,11 @@ public interface RoleMapper {
      * @return
      */
     int insertRoleAndPermission(Map<String,Object> param);
+
+    /**
+     * 插入之前先删除已存在的角色权限关联
+     * @param roleId
+     * @return
+     */
+    int deleteRoleAndPermission(Integer roleId);
 }

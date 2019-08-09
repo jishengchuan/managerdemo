@@ -105,7 +105,7 @@
                         <div class="box-header">
                             <h3 class="box-title" th:text="用户表单">Hover Data Table</h3>
                             <button type="button" id="add" class="btn btn-success pull-right" data-toggle="modal"
-                                    data-target="#modal-default">
+                                    data-target="#modal-default" th:each="permission : ${session.permissions}" th:if="${permission.permission_id} == 3005">
                                 添加用户
                             </button>
                         </div>
@@ -140,15 +140,17 @@
                                     <td th:text="${user.create_time}">2019年8月5日11:10:59</td>
                                     <td>
                                         <button type="button" id="update" class="btn btn-info" data-toggle="modal"
-                                                data-target="#modal-info" onclick="updateUser(this)">
+                                                data-target="#modal-info" onclick="updateUser(this)" th:each="permission : ${session.permissions}" th:if="${permission.permission_id} == 3006">
                                             修改
                                         </button>
+                                        <i th:each="permission : ${session.permissions}" th:if="${permission.permission_id} == 3007">
                                         <button type="button" class="btn btn-danger" onclick="ban(this)"
                                                 th:if="${user.status}==1">禁用
-                                        </button>
+                                        </button></i>
+                                        <i th:each="permission : ${session.permissions}" th:if="${permission.permission_id} == 3007">
                                         <button type="button" class="btn btn-success" onclick="ban(this)"
                                                 th:if="${user.status}==0">启用
-                                        </button>
+                                        </button></i>
                                     </td>
                                 </tr>
                                 </tbody>
