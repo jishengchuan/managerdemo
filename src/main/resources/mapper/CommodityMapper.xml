@@ -4,7 +4,12 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--namespace：命名空间，设置为数据层接口的全类名-->
 <mapper namespace="com.hwua.managerdemo.mapper.CommodityMapper">
-    <select id="query" resultType="map">
+    <select id="queryAll" resultType="map">
+        SELECT *
+        FROM commodity
+    </select>
+
+    <select id="query" parameterType="map" resultType="map">
         SELECT * FROM commodity WHERE 1 = 1
         <if test="sid != null">
             AND sort_id = #{sid}
@@ -22,5 +27,50 @@
             ORDER BY COMMODITY_PRICE
         </if>
     </select>
+
+
+    <select id="queryBySaleOrStock" resultType="map">
+        SELECT * FROM commodity WHERE 1 = 1
+        <if test="cid != null">
+            AND commodity_id = #{cid}
+        </if>
+        <if test="sale != null">
+            ORDER BY sale DESC
+        </if>
+        <if test="stock != null">
+            ORDER BY stock DESC
+        </if>
+    </select>
+
+    <update id="updateStockAndSale">
+        UPDATE commodity
+        SET stock = stock - #{quantity},
+            sale  = sale + #{quantity}
+        WHERE commodity_id = #{cid}
+    </update>
+
+    <update id="editCommodity" parameterType="map">
+        UPDATE commodity
+        SET commodity_name  = #{commodityName},
+            commodity_price = #{commodityPrice},
+            sale            = #{sale},
+            stock           = #{stock},
+            brand_id        = #{brandId},
+            sort_id         = #{sortId}
+        WHERE commodity_id = #{commodityId}
+    </update>
+
+    <insert id="addCommodity" parameterType="map">
+        INSERT INTO commodity (commodity_name, commodity_info, commodity_price, stock, sale, sort_id, brand_id,
+                               commodity_apprise)
+        VALUES (#{commodityName}, '', #{commodityPrice}, #{stock}, #{sale}, #{sortId}, #{brandId}, '')
+    </insert>
+
+    <update id="deleteCommodity" parameterType="map">
+        UPDATE commodity
+        SET commodity_states = #{status}
+        WHERE commodity_id = #{commodityId}
+    </update>
+
 </mapper>
 

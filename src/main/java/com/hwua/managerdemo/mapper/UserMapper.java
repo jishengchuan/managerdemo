@@ -56,4 +56,11 @@ public interface UserMapper {
      */
     int insertUserAndRole(Map<String,Object> param);
 
+    /**
+     * 修改时先删除用户和角色的关系
+     * @param param
+     * @return
+     */
+    int deleteUserAndRole(Map<String,Object> param);
+
 }

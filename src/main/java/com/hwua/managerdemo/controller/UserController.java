@@ -2,6 +2,7 @@ package com.hwua.managerdemo.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.hwua.managerdemo.service.PermissionService;
+import com.hwua.managerdemo.service.RoleService;
 import com.hwua.managerdemo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -74,14 +75,16 @@ public class UserController {
 
     @PostMapping(value = "/updateUser", produces = "application/json;charset=utf-8")
     @ResponseBody
-    public String update(Integer userId, String username, String tel, String email) {
+    public String update(Integer userId, String username, String tel, String email,String roleName) {
         Map<String, Object> map = userService.queryByUsername(username);
         if (!map.containsKey("error")) {
             Map<String, Object> param = new HashMap<>();
             param.put("userId", userId);
+            userService.deleteUserAndRole(param);
             param.put("username", username);
             param.put("tel", tel);
             param.put("email", email);
+            param.put("roleName",roleName);
             boolean b = userService.doUpdate(param);
             return "{\"success\":" + b + "}";
         }

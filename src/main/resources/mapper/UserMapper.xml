@@ -62,5 +62,8 @@
         VALUES (#{userId}, #{role_id})
     </insert>
 
+    <delete id="deleteUserAndRole" parameterType="map">
+        DELETE FROM sys_user_role WHERE user_id=#{userId}
+    </delete>
 </mapper>
 

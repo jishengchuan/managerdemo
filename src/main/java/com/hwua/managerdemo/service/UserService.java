@@ -20,4 +20,6 @@ public interface UserService {
     boolean insertUser(Map<String,Object> user);
 
     boolean ban(Map<String,Object> param);
+
+    boolean deleteUserAndRole(Map<String,Object> param);
 }

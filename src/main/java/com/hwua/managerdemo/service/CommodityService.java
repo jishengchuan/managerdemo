@@ -5,14 +5,20 @@ import java.util.Map;
 
 public interface CommodityService {
 
-    /**
-     * 关于商品的查询;如品牌,分类.名字...
-     * @param name
-     * @param sid
-     * @param bid
-     * @param desc
-     * @param page
-     * @return
-     */
-    List<Map<String, Object>> query(String name, String sid,String bid, String desc,Integer page);
+    //商品检索
+    List<Map<String,Object>> query(String name, String sid, String bid, String desc,Integer page);
+    //根据商品id检索
+    Map<String,Object> queryByCid(Integer cid);
+    //销售库存排行榜
+    List<Map<String,Object>> querySaleAndStock(String sale, String stock,Integer page);
+    //查询库存
+    Map<String,Object> queryCidByStock(Integer cid);
+
+    boolean addCommodity(Map<String,Object> param);
+
+    boolean editCommodity(Map<String,Object> param);
+
+    boolean deleteCommodity(Map<String,Object> param);
+
+    boolean ban(Map<String,Object> param);
 }

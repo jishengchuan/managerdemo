@@ -273,6 +273,31 @@
                                     <li class="treeview">
                                         <input type="checkbox" id="permissionMgr" name="per" value="3004"><a href="#">&nbsp&nbsp&nbsp&nbsp权限管理</a>
                                     </li>
+                                    <li class="treeview">
+                                        <input type="checkbox" name="per" id="commodityMgr" value="3014"><a href="#">&nbsp&nbsp&nbsp&nbsp商品管理</a>
+                                        <ul class="treeview-menu">
+                                            <li><label><input type="checkbox" name="per" id="commodityAdd" value="3017">&nbsp&nbsp&nbsp&nbsp商品添加</label></li>
+                                            <li><label><input type="checkbox" name="per" id="commodityEdit" value="3018">&nbsp&nbsp&nbsp&nbsp商品修改</label></li>
+                                            <li><label><input type="checkbox" name="per" id="commodityDel" value="3019">&nbsp&nbsp&nbsp&nbsp商品删除</label></li>
+                                        </ul>
+                                    </li>
+                                    <li class="treeview">
+                                        <input type="checkbox" name="per" id="brandMgr" value="3015"><a href="#">&nbsp&nbsp&nbsp&nbsp品牌管理</a>
+                                        <ul class="treeview-menu">
+                                            <li><label><input type="checkbox" name="per" id="brandAdd" value="3020">&nbsp&nbsp&nbsp&nbsp品牌添加</label></li>
+                                            <li><label><input type="checkbox" name="per" id="brandEdit" value="3021">&nbsp&nbsp&nbsp&nbsp品牌修改</label></li>
+                                            <li><label><input type="checkbox" name="per" id="brandDel" value="3022">&nbsp&nbsp&nbsp&nbsp品牌删除</label></li>
+                                        </ul>
+                                    </li>
+                                    <li class="treeview">
+                                        <input type="checkbox" name="per" id="sortMgr" value="3014"><a href="#">&nbsp&nbsp&nbsp&nbsp分类管理</a>
+                                        <ul class="treeview-menu">
+                                            <li><label><input type="checkbox" name="per" id="sortAdd" value="3017">&nbsp&nbsp&nbsp&nbsp分类添加</label></li>
+                                            <li><label><input type="checkbox" name="per" id="sortEdit" value="3018">&nbsp&nbsp&nbsp&nbsp分类修改</label></li>
+                                            <li><label><input type="checkbox" name="per" id="sortDel" value="3019">&nbsp&nbsp&nbsp&nbsp分类删除</label></li>
+                                        </ul>
+                                    </li>
+                                    </lisort
                                 </ul>
                             </div>
                             <!-- /.box-body -->
@@ -387,6 +412,7 @@
             /*$(':checkbox[name="per"]:checked').each(function(){
                 url += perId.push($(this).val());
             });*/
+            console.log(form3);
             var url = "/addRoleAndPermission?roleId="+roleId+"&"+form3;
             $.ajax({
                 url:url,
@@ -440,6 +466,18 @@
                 $('#roleEdit').prop("checked",!!res.roleEdit);
                 $('#roleDel').prop("checked",!!res.roleDel);
                 $('#permissionMgr').prop("checked",!!res.permissionMgr);
+                $('#commodityMgr').prop("checked",!!res.commodityMgr);
+                $('#commodityAdd').prop("checked",!!res.commodityAdd);
+                $('#commodityEdit').prop("checked",!!res.commodityEdit);
+                $('#commodityDel').prop("checked",!!res.commodityDel);
+                $('#brandMgr').prop("checked",!!res.brandMgr);
+                $('#brandAdd').prop("checked",!!res.brandAdd);
+                $('#brandEdit').prop("checked",!!res.brandEdit);
+                $('#brandDel').prop("checked",!!res.brandDel);
+                $('#sortMgr').prop("checked",!!res.sortMgr);
+                $('#sortAdd').prop("checked",!!res.sortAdd);
+                $('#sortEdit').prop("checked",!!res.sortEdit);
+                $('#sortDel').prop("checked",!!res.sortDel);
             }
         })
     }

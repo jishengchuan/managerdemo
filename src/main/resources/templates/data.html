@@ -109,7 +109,6 @@
                                 添加用户
                             </button>
                         </div>
-
                         <!-- /.box-header -->
                         <div class="box-body">
                             <table id="example2" class="table table-bordered table-hover">
@@ -228,6 +227,16 @@
                                         <input type="email" class="form-control" id="inputEmail4" name="email"
                                                placeholder="email">
                                     </div>
+                                </div>
+                                <div class="form-group">
+                                    <label th:text="职位">Minimal</label>
+                                    <select class="form-control select2" id="select2" th:data-placeholder="选择职位"
+                                            data-placeholder="Select a State"
+                                            style="width: 100%;">
+                                        <option selected="selected" id="sel"></option>
+                                        <option th:each="role : ${roles}" th:text="${role.name}">Alaska</option>
+                                        <!--<option disabled="disabled">California (disabled)</option>-->
+                                    </select>
                                 </div>
                             </div>
                             <!-- /.box-body -->
@@ -370,11 +379,21 @@
             'autoWidth': false
         });
         $('#submitup').click(function () {
-            var data = $('#form1').serialize();
+            var userId = $("#uid").val();
+            var username = $('#inputName').val();
+            var tel = $('#inputTel').val();
+            var email = $('#inputEmail4').val();
+            var roleName = $('#select2')[0].value;
             $.ajax({
                 url: "/updateUser",
                 type: "post",
-                data: data,
+                data: {
+                    userId:userId,
+                    username:username,
+                    tel:tel,
+                    email:email,
+                    roleName:roleName
+                },
                 success: function (res) {
                     console.log(res);
                     if (res.success) {
@@ -448,11 +467,13 @@
                 userId: userId
             },
             success: function (res) {
+                console.log(res);
                 if (!res.error) {
                     $('#uid').val(res.user_id);
                     $('#inputName').val(res.username);
                     $('#inputTel').val(res.tel);
                     $('#inputEmail4').val(res.email);
+                    $('#sel').text(res.name);
                 } else {
                     alert("修改失败")
                 }

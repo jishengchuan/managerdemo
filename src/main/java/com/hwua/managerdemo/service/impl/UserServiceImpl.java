@@ -81,6 +81,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean doUpdate(Map<String, Object> param) {
+        Map<String, Object> map = roleMapper.queryRole(param);
+        param.put("role_id", map.get("role_id"));
+        userMapper.insertUserAndRole(param);
         return userMapper.doUpdate(param) == 1;
     }
 
@@ -100,6 +103,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean ban(Map<String, Object> param) {
         return userMapper.ban(param) == 1;
+    }
+
+    @Override
+    public boolean deleteUserAndRole(Map<String, Object> param) {
+        return userMapper.deleteUserAndRole(param) == 1;
     }
 
 

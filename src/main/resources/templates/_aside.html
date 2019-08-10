@@ -29,33 +29,39 @@
                 <a href="/index"><i class="fa fa-dashboard"></i> <span th:text="工作台">Dashboard</span></a>
             </li>
             <!--th:if="${permission.permission_id} == 3001"-->
-            <li class="treeview" th:each="permission : ${session.permissions}" th:if="${permission.permission_id} == 3002" th:class="${index}==2 ? 'active treeview'">
+            <li class="treeview" th:each="permission : ${session.permissions}"
+                th:if="${permission.permission_id} == 3002" th:class="${index}==2 ? 'active treeview'">
                 <a href="/userData">
                     <i class="fa fa-user"></i>
                     <span th:text="${permission.pname}">Layout Options</span></a>
             </li>
-            <li th:each="permission : ${session.permissions}" th:if="${permission.permission_id} == 3003" th:class="${index}==3 ? 'active treeview'">
+            <li class="treeview" th:each="permission : ${session.permissions}" th:if="${permission.permission_id} == 3003"
+                th:class="${index}==3 ? 'active treeview'">
                 <a href="/roleData">
-                    <i class="fa  fa-tripadvisor"></i> <span th:text="角色管理">Widgets</span>
+                    <i class="fa fa-tripadvisor"></i> <span th:text="角色管理">Widgets</span>
                     <span class="pull-right-container">
               <small class="label pull-right bg-green">vital</small>
             </span>
                 </a>
             </li>
-            <li class="treeview">
-                <a href="#">
-                    <i class="fa fa-pie-chart"></i>
-                    <span>Charts</span>
-                    <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
+            <li class="treeview" th:each="permission : ${session.permissions}"
+                th:if="${permission.permission_id} == 3014" th:class="${index}==4 ? 'active treeview'">
+                <a href="/commodityData">
+                    <i class="fa fa-balance-scale"></i>
+                    <span th:text="${permission.pname}">Charts</span>
                 </a>
-                <ul class="treeview-menu">
-                    <li><a href="pages/charts/chartjs.html"><i class="fa fa-circle-o"></i> ChartJS</a></li>
-                    <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Morris</a></li>
-                    <li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i> Flot</a></li>
-                    <li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li>
-                </ul>
+            </li>
+            <li class="treeview" th:each="permission : ${session.permissions}"
+                th:if="${permission.permission_id} == 3015" th:class="${index}==5 ? 'active treeview'">
+                <a href="/userData">
+                    <i class="fa fa-user"></i>
+                    <span th:text="${permission.pname}">Layout Options</span></a>
+            </li>
+            <li class="treeview" th:each="permission : ${session.permissions}"
+                th:if="${permission.permission_id} == 3016" th:class="${index}==6 ? 'active treeview'">
+                <a href="/userData">
+                    <i class="fa fa-user"></i>
+                    <span th:text="${permission.pname}">Layout Options</span></a>
             </li>
             <li class="treeview">
                 <a href="#">
