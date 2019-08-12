@@ -3,6 +3,7 @@ package com.hwua.managerdemo.service.impl;
 import com.hwua.managerdemo.mapper.RoleMapper;
 import com.hwua.managerdemo.mapper.UserMapper;
 import com.hwua.managerdemo.service.UserService;
+import com.hwua.managerdemo.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -63,7 +64,8 @@ public class UserServiceImpl implements UserService {
             map = new HashMap<>();
             map.put("error", "用户名不存在");
         } else {
-            if (map.get("password").equals(password)) {
+            String md5 = MD5Util.getMd5(param.get("username").toString().concat(password.toString()));
+            if (map.get("password").equals(md5)) {
                 if(map.get("status").toString().equals("1")){
                     //登录成功
                     return map;
@@ -83,6 +85,7 @@ public class UserServiceImpl implements UserService {
     public boolean doUpdate(Map<String, Object> param) {
         Map<String, Object> map = roleMapper.queryRole(param);
         param.put("role_id", map.get("role_id"));
+
         userMapper.insertUserAndRole(param);
         return userMapper.doUpdate(param) == 1;
     }
@@ -90,6 +93,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean insertUser(Map<String, Object> user) {
         user.put("userId", "");
+
         if (userMapper.insertUser(user) == 1){
             Map<String,Object> param = new HashMap<>();
             param.put("roleName",user.get("roleName"));

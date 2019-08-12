@@ -11,5 +11,15 @@ public interface BrandService {
 
     List<Map<String,Object>> queryAll();
 
+    List<Map<String,Object>> query();
+
+    List<Map<String,Object>> query4status();
+
     Map<String,Object> queryByBName(String name);
+
+    boolean editBrand(Map<String,Object> param);
+
+    boolean addBrand(Map<String,Object> param);
+
+    boolean banBrand(Map<String,Object> param);
 }

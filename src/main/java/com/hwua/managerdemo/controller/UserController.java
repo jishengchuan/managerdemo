@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.hwua.managerdemo.service.PermissionService;
 import com.hwua.managerdemo.service.RoleService;
 import com.hwua.managerdemo.service.UserService;
+import com.hwua.managerdemo.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -100,6 +101,8 @@ public class UserController {
             Map<String, Object> user = new HashMap<>();
             user.put("username", username);
             user.put("password", password);
+            String md5 = MD5Util.getMd5(username.concat(password));
+            user.put("password",md5);
             user.put("tel", tel);
             user.put("email", email);
             user.put("photo", photo);
@@ -119,5 +122,11 @@ public class UserController {
         map.put("status", status.equals("1") ? 0 : 1);
         boolean ban = userService.ban(map);
         return "{\"success\":" + ban + "}";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request){
+        request.getSession().invalidate();
+        return "redirect:/login";
     }
 }

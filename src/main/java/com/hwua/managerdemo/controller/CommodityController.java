@@ -36,10 +36,11 @@ public class CommodityController {
         model.addAttribute("list", query);
         List<Map<String, Object>> brands = brandService.queryBySid(sid);
         model.addAttribute("brands", brands);
-        List<Map<String, Object>> allBrand = brandService.queryAll();
+        List<Map<String, Object>> allBrand = brandService.query4status();
         model.addAttribute("allBrand", allBrand);
-        List<Map<String, Object>> sorts = sortService.queryAll();
+        List<Map<String, Object>> sorts = sortService.query4status();
         model.addAttribute("allSort", sorts);
+        model.addAttribute("index",4);
         //判断query是否是Page类是子类或者子类实例
         if (query instanceof Page) {
             Page commodityPage = (Page) query;

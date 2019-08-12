@@ -9,12 +9,32 @@
         SELECT * FROM sort WHERE sort_id IN (SELECT sort_id FROM COMMODITY GROUP BY sort_id)
     </select>
 
+    <select id="queryAll" resultType="map">
+        SELECT * FROM sort
+    </select>
+
+    <select id="query4status" resultType="map">
+        SELECT * FROM sort WHERE sort_states = 1;
+    </select>
+
     <select id="queryBySid" parameterType="int" resultType="map">
         SELECT * FROM sort WHERE sort_id = #{sid}
     </select>
 
-    <select id="queryBySName" resultType="map">
+    <select id="queryBySName" parameterType="map">
         SELECT * FROM sort WHERE sort_name = #{sortName}
     </select>
+
+    <update id="editSort" parameterType="map">
+        UPDATE sort SET sort_name = #{sortName} WHERE sort_id=#{sortId}
+    </update>
+
+    <insert id="addSort" parameterType="map">
+        INSERT INTO sort(sort_name) VALUES (#{sortName})
+    </insert>
+
+    <update id="banSort" parameterType="map">
+        UPDATE sort SET sort_states = #{status} WHERE sort_id = #{sortId}
+    </update>
 </mapper>
 

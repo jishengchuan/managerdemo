@@ -6,21 +6,56 @@
 <mapper namespace="com.hwua.managerdemo.mapper.BrandMapper">
 
     <select id="queryBySid" parameterType="int" resultType="map">
-        SELECT * FROM brand WHERE brand_id IN(SELECT commodity.brand_id FROM commodity WHERE sort_id = #{sid} AND commodity_states = 1 GROUP BY commodity.brand_id)
+        SELECT *
+        FROM brand
+        WHERE brand_id IN (SELECT commodity.brand_id
+                           FROM commodity
+                           WHERE sort_id = #{sid}
+                             AND commodity_states = 1
+                           GROUP BY commodity.brand_id)
     </select>
 
     <select id="queryAll" resultType="map">
-        SELECT * FROM BRAND WHERE BRAND_ID IN(SELECT BRAND_ID FROM COMMODITY WHERE COMMODITY_STATES = 1 GROUP BY BRAND_ID)
+        SELECT *
+        FROM BRAND
+        WHERE BRAND_ID IN (SELECT BRAND_ID FROM COMMODITY WHERE COMMODITY_STATES = 1 GROUP BY BRAND_ID)
     </select>
 
+    <select id="query" resultType="map">
+        SELECT * FROM brand
+    </select>
+
+    <select id="query4status" resultType="map">
+        SELECT * FROM brand WHERE brand_states = 1
+    </select>
+    
     <select id="queryByBid" parameterType="int" resultType="map">
-        SELECT * FROM BRAND WHERE BRAND_ID = #{bid}
+        SELECT *
+        FROM BRAND
+        WHERE BRAND_ID = #{bid}
     </select>
 
     <select id="queryByBName" resultType="map">
-        SELECT * FROM BRAND WHERE brand_name = #{brandName}
+        SELECT *
+        FROM BRAND
+        WHERE brand_name = #{brandName}
     </select>
 
+    <insert id="addBrand" parameterType="map">
+        INSERT INTO brand (brand_name)
+        VALUES (#{brandName})
+    </insert>
 
+    <update id="editBrand" parameterType="map">
+        UPDATE brand
+        SET brand_name = #{brandName}
+        WHERE brand_id = #{brandId}
+    </update>
+
+    <update id="banBrand" parameterType="map">
+        UPDATE brand
+        SET brand_states = #{status}
+        WHERE brand_id = #{brandId}
+    </update>
 </mapper>
 

@@ -36,8 +36,33 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
+    public List<Map<String, Object>> query() {
+        return brandMapper.query();
+    }
+
+    @Override
+    public List<Map<String, Object>> query4status() {
+        return brandMapper.query4status();
+    }
+
+    @Override
     public Map<String, Object> queryByBName(String name) {
         return brandMapper.queryByBName(name);
+    }
+
+    @Override
+    public boolean editBrand(Map<String, Object> param) {
+        return brandMapper.editBrand(param) == 1;
+    }
+
+    @Override
+    public boolean addBrand(Map<String, Object> param) {
+        return brandMapper.addBrand(param) == 1;
+    }
+
+    @Override
+    public boolean banBrand(Map<String, Object> param) {
+        return brandMapper.banBrand(param) == 1;
     }
 
 

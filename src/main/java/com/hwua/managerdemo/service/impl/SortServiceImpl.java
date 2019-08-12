@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service("sortService")
-public class SortServiceImpl implements SortService {
+public  class SortServiceImpl implements SortService {
 
     @Autowired
     private SortMapper sortMapper;
@@ -22,11 +22,33 @@ public class SortServiceImpl implements SortService {
 
     @Override
     public List<Map<String, Object>> queryAll() {
-        return sortMapper.queryNav();
+        return sortMapper.queryAll();
+    }
+
+    @Override
+    public List<Map<String, Object>> query4status() {
+        return sortMapper.query4status();
     }
 
     @Override
     public Map<String, Object> queryBySName(String name) {
         return sortMapper.queryBySName(name);
     }
+
+    @Override
+    public boolean editSort(Map<String, Object> param) {
+        return sortMapper.editSort(param) == 1;
+    }
+
+    @Override
+    public boolean addSort(Map<String, Object> param) {
+        return sortMapper.addSort(param) == 1;
+    }
+
+    @Override
+    public boolean banSort(Map<String, Object> param) {
+        return sortMapper.banSort(param) == 1;
+    }
+
+
 }
